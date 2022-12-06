@@ -1,0 +1,21 @@
+{
+  "users": [
+    {
+      "registration": "1910400",
+      "email": "gabrielcunha2012@gmail.com",
+      "password": "123",
+      "authToken": null,
+      "waitingForFPRequest": false,
+      "fpToken": null
+    },
+    {
+      "registration": "951549927",
+      "email": "leopon01@unifor.br",
+      "password": "12345678",
+      "authToken": null,
+      "waitingForFPRequest": false,
+      "fpToken": null
+    }
+  ],
+  "logged": []
+}
