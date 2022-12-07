@@ -24,17 +24,17 @@ public class Product {
     @Getter @Setter
     private Boolean enable;
     @Getter @Setter
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name="contributions_products", joinColumns=
-            {@JoinColumn(name="id_contributions")}, inverseJoinColumns=
+            {@JoinColumn(name="id_contribution")}, inverseJoinColumns=
             {@JoinColumn(name="id_product")})
-    private List<Contribution> contributions = new ArrayList<>();
+    private List<Contribution> contributions = new ArrayList<Contribution>();
     @Getter @Setter
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name="solicitations_products", joinColumns=
-            {@JoinColumn(name="id_solicitations")}, inverseJoinColumns=
+            {@JoinColumn(name="id_solicitation")}, inverseJoinColumns=
             {@JoinColumn(name="id_product")})
-    private List<Solicitation> solicitations = new ArrayList<>();
+    private List<Solicitation> solicitations = new ArrayList<Solicitation>();
 
     public Product(String name, String description, int qnt_min_employee, Boolean enable) {
         this.name = name;

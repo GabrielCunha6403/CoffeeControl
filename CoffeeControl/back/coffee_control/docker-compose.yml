@@ -8,7 +8,7 @@ services:
       POSTGRES_PASSWORD: brasil
       PGDATA: /data/postgres
     volumes:
-      - /home/951549924@adm.unifor.br/Documentos/CoffeeControl/back/coffee_control/volume-docker:/data/postgres
+      - /home/951549924@adm.unifor.br/Documentos/CoffeeControl/CoffeeControl/back/coffee_control/volume-docker:/data/postgres
     ports:
       - "5432:5432"
     networks:

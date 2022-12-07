@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name = "contributions")
@@ -24,9 +25,9 @@ public class Contribution {
     @Getter @Setter
     private LocalDate contribution_date;
     @Getter @Setter
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name="contributions_products", joinColumns=
             {@JoinColumn(name="id_contribution")}, inverseJoinColumns=
             {@JoinColumn(name="id_product")})
-    private List<Product> products;
+    private List<Product> products = new ArrayList<Product>();
 }

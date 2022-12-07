@@ -1,9 +1,6 @@
-package br.com.unifor.coffeecontrol.controllers.dtos;
+package br.com.unifor.coffeecontrol.dtos;
 
-import br.com.unifor.coffeecontrol.modelos.Employee;
-import br.com.unifor.coffeecontrol.modelos.Product;
 import br.com.unifor.coffeecontrol.modelos.Solicitation;
-import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.domain.Page;

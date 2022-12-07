@@ -1,8 +1,8 @@
 package br.com.unifor.coffeecontrol.controllers;
 
-import br.com.unifor.coffeecontrol.controllers.dtos.SolicitationDto;
-import br.com.unifor.coffeecontrol.controllers.forms.SolicitationForm;
-import br.com.unifor.coffeecontrol.controllers.forms.UpdatedSolicitationForm;
+import br.com.unifor.coffeecontrol.dtos.SolicitationDto;
+import br.com.unifor.coffeecontrol.forms.SolicitationForm;
+import br.com.unifor.coffeecontrol.forms.UpdatedSolicitationForm;
 import br.com.unifor.coffeecontrol.modelos.Solicitation;
 import br.com.unifor.coffeecontrol.repositories.EmployeeRepository;
 import br.com.unifor.coffeecontrol.repositories.SolicitationRepository;

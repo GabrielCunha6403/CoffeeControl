@@ -1,6 +1,5 @@
-package br.com.unifor.coffeecontrol.controllers.forms;
+package br.com.unifor.coffeecontrol.forms;
 
-import br.com.unifor.coffeecontrol.controllers.dtos.ProductDto;
 import br.com.unifor.coffeecontrol.modelos.Product;
 import br.com.unifor.coffeecontrol.repositories.ProductRepository;
 import lombok.Getter;

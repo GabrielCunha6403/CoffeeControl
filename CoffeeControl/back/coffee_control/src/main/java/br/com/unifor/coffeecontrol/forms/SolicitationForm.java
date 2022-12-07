@@ -1,4 +1,4 @@
-package br.com.unifor.coffeecontrol.controllers.forms;
+package br.com.unifor.coffeecontrol.forms;
 
 import br.com.unifor.coffeecontrol.modelos.Employee;
 import br.com.unifor.coffeecontrol.modelos.Solicitation;
@@ -13,10 +13,10 @@ public class SolicitationForm {
     @Getter @Setter
     private String name;
     @Getter @Setter
-    private String name_employee;
+    private int id_employee;
 
     public Solicitation convert(EmployeeRepository employeeRepository){
-        Employee employee = employeeRepository.findByName(this.name_employee);
+        Employee employee = employeeRepository.getReferenceById(this.id_employee);
         return new Solicitation(this.name, employee);
     }
 }

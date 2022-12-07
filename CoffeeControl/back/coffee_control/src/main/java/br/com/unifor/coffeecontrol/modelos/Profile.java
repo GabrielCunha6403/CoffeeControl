@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name = "profiles")
@@ -19,10 +20,7 @@ public class Profile {
     @Getter @Setter
     private String description;
     @Getter @Setter
-    @ManyToMany
-    @JoinTable(name="profiles_employees", joinColumns=
-            {@JoinColumn(name="id_profiles")}, inverseJoinColumns=
-            {@JoinColumn(name="id_employees")})
+    @ManyToMany(mappedBy = "profiles", cascade = CascadeType.ALL)
     private List<Employee> employees;
 
     public Profile(String name, String description) {

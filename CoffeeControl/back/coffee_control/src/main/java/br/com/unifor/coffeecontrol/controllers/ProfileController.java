@@ -1,14 +1,9 @@
 package br.com.unifor.coffeecontrol.controllers;
 
-import br.com.unifor.coffeecontrol.controllers.dtos.ProductDto;
-import br.com.unifor.coffeecontrol.controllers.dtos.ProfileDto;
-import br.com.unifor.coffeecontrol.controllers.forms.ProductForm;
-import br.com.unifor.coffeecontrol.controllers.forms.ProfileForm;
-import br.com.unifor.coffeecontrol.controllers.forms.UpdatedProductForm;
-import br.com.unifor.coffeecontrol.controllers.forms.UpdatedProfileForm;
-import br.com.unifor.coffeecontrol.modelos.Product;
+import br.com.unifor.coffeecontrol.dtos.ProfileDto;
+import br.com.unifor.coffeecontrol.forms.ProfileForm;
+import br.com.unifor.coffeecontrol.forms.UpdatedProfileForm;
 import br.com.unifor.coffeecontrol.modelos.Profile;
-import br.com.unifor.coffeecontrol.repositories.ProductRepository;
 import br.com.unifor.coffeecontrol.repositories.ProfileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
