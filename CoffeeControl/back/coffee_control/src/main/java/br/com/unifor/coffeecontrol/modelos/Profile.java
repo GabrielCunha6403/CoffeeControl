@@ -20,7 +20,7 @@ public class Profile {
     @Getter @Setter
     private String description;
     @Getter @Setter
-    @ManyToMany(mappedBy = "profiles", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "profile")
     private List<Employee> employees;
 
     public Profile(String name, String description) {

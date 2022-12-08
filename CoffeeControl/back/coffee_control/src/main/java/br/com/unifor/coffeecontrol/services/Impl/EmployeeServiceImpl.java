@@ -10,10 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 
+@Service
 public class EmployeeServiceImpl implements EmployeeService {
 
     @Autowired
@@ -36,7 +38,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public EmployeeDto showSpecificEmployeeById(int id) {
         Employee employee = employeeRepository.getReferenceById(id);
-        System.out.println(employee.getProfiles());
+        System.out.println(employee.getProfile());
         return new EmployeeDto(employee);
     }
 

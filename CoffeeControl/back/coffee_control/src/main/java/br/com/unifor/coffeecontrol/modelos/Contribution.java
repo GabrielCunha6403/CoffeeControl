@@ -29,5 +29,5 @@ public class Contribution {
     @JoinTable(name="contributions_products", joinColumns=
             {@JoinColumn(name="id_contribution")}, inverseJoinColumns=
             {@JoinColumn(name="id_product")})
-    private List<Product> products = new ArrayList<Product>();
+    private List<Product> products;
 }

@@ -26,16 +26,16 @@ public class Solicitation {
     @Getter @Setter
     @OneToMany(mappedBy = "solicitation")
     private List<Contribution> contributions;
-
-    public Solicitation(String name, Employee employee) {
-        this.name = name;
-        this.date = LocalDate.now();
-        this.employee = employee;
-    }
     @Getter @Setter
     @ManyToMany
     @JoinTable(name="solicitations_products", joinColumns=
             {@JoinColumn(name="id_solicitations")}, inverseJoinColumns=
             {@JoinColumn(name="id_product")})
     private List<Product> products;
+
+    public Solicitation(String name, Employee employee) {
+        this.name = name;
+        this.date = LocalDate.now();
+        this.employee = employee;
+    }
 }

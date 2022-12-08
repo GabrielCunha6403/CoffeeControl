@@ -5,6 +5,7 @@ import br.com.unifor.coffeecontrol.forms.ProfileForm;
 import br.com.unifor.coffeecontrol.forms.UpdatedProfileForm;
 import br.com.unifor.coffeecontrol.modelos.Profile;
 import br.com.unifor.coffeecontrol.repositories.ProfileRepository;
+import br.com.unifor.coffeecontrol.services.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,39 +21,31 @@ import java.net.URI;
 public class ProfileController {
 
     @Autowired
-    private ProfileRepository profileRepository;
+    private ProfileService profileService;
 
     @GetMapping
-    public Page<ProfileDto> listProducts(Pageable paginacao) {
-        Page<Profile> profiles = profileRepository.findAll(paginacao);
-        return ProfileDto.convert(profiles);
+    public Page<ProfileDto> listProfiles(Pageable paginacao) {
+        return profileService.listProfiles(paginacao);
     }
 
     @PostMapping
-    public ResponseEntity<ProfileDto> signUpProduct(@RequestBody ProfileForm profileForm, UriComponentsBuilder uriBuilder){
-        Profile profile = profileForm.convert(profileRepository);
-        profileRepository.save(profile);
-
-        URI uri = uriBuilder.path("/products/{id}").buildAndExpand(profile.getId()).toUri();
-        return ResponseEntity.created(uri).body(new ProfileDto(profile));
+    public ResponseEntity<ProfileDto> signUpProfile(@RequestBody ProfileForm profileForm, UriComponentsBuilder uriBuilder){
+        return profileService.signUpProfile(profileForm, uriBuilder);
     }
 
     @GetMapping("/{id}")
     public ProfileDto showSpecificProfileById(@PathVariable int id){
-        Profile profile = profileRepository.getReferenceById(id);
-        return new ProfileDto(profile);
+        return profileService.showSpecificProfileById(id);
     }
 
     @PutMapping("/{id}")
     @Transactional
     public ResponseEntity<ProfileDto> updateSpecificProfileById(@PathVariable int id, @RequestBody UpdatedProfileForm form){
-        Profile profile = form.update(id, profileRepository);
-        return ResponseEntity.ok(new ProfileDto(profile));
+        return profileService.updateSpecificProfileById(id, form);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Profile> deleteSpecificProfileById(@PathVariable int id){
-        profileRepository.deleteById(id);
-        return ResponseEntity.ok().build();
+        return profileService.deleteSpecificProfileById(id);
     }
 }

@@ -28,11 +28,8 @@ public class Employee {
     @OneToMany(mappedBy = "employee")
     private List<Solicitation> solicitations;
     @Getter @Setter
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name="profiles_employees", joinColumns=
-            {@JoinColumn(name="id_employee")}, inverseJoinColumns=
-            {@JoinColumn(name="id_profile")})
-    private List<Profile> profiles;
+    @ManyToOne
+    private Profile profile;
 
 
 
