@@ -47,4 +47,10 @@ public class EmployeeController {
     public ResponseEntity<Employee> deleteSpecificEmployeeById(@PathVariable int id){
         return employeeService.deleteSpecificEmployeeById(id);
     }
+
+//    @PutMapping("/{id}")
+//    @Transactional
+//    public ResponseEntity<EmployeeDto> toggleEnableById(@PathVariable int id, EmployeeRepository repository){
+//        return employeeService.toggleEnableById(id, repository);
+//    }
 }

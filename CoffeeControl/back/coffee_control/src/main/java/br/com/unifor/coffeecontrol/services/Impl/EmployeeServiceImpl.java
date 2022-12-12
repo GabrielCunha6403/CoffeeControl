@@ -53,4 +53,11 @@ public class EmployeeServiceImpl implements EmployeeService {
         employeeRepository.deleteById(id);
         return ResponseEntity.ok().build();
     }
+
+    @Override
+    public ResponseEntity<EmployeeDto> toggleEnableById(int id, EmployeeRepository repository) {
+        Employee employee = repository.getReferenceById(id);
+        employee.setEnable(!employee.getEnable());
+        return ResponseEntity.ok(new EmployeeDto(employee));
+    }
 }

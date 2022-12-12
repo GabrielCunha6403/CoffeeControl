@@ -4,6 +4,7 @@ import br.com.unifor.coffeecontrol.dtos.SolicitationDto;
 import br.com.unifor.coffeecontrol.forms.SolicitationForm;
 import br.com.unifor.coffeecontrol.forms.UpdatedSolicitationForm;
 import br.com.unifor.coffeecontrol.modelos.Solicitation;
+import br.com.unifor.coffeecontrol.repositories.ProductRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -22,4 +23,6 @@ public interface SolicitationService {
     ResponseEntity<SolicitationDto> updateSolicitationById(int id, UpdatedSolicitationForm form);
 
     ResponseEntity<Solicitation> deleteSpecificSolicitationById(int id);
+
+    ResponseEntity<SolicitationDto> insertProduct(int id, ProductRepository productRepository, int id_product);
 }

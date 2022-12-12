@@ -22,6 +22,8 @@ public class Employee {
     @Getter @Setter
     private String password;
     @Getter @Setter
+    private Boolean enable;
+    @Getter @Setter
     @OneToMany(mappedBy = "employee")
     private List<Contribution> contributions;
     @Getter @Setter
@@ -29,9 +31,8 @@ public class Employee {
     private List<Solicitation> solicitations;
     @Getter @Setter
     @ManyToOne
+    @JoinColumn(name = "id_profile")
     private Profile profile;
-
-
 
     public Employee(String name, int registration, String password) {
         this.name = name;

@@ -24,11 +24,11 @@ public class Product {
     @Getter @Setter
     private Boolean enable;
     @Getter @Setter
-    @ManyToMany(mappedBy = "products",cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "products")
     private List<Contribution> contributions;
     @Getter @Setter
-    @ManyToMany(mappedBy = "products",cascade = CascadeType.ALL)
-    private List<Solicitation> solicitations ;
+    @ManyToMany(mappedBy = "products")
+    private List<Solicitation> solicitations;
 
     public Product(String name, String description, int qnt_min_employee, Boolean enable) {
         this.name = name;

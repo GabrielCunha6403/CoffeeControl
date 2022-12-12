@@ -4,6 +4,7 @@ import br.com.unifor.coffeecontrol.dtos.EmployeeDto;
 import br.com.unifor.coffeecontrol.forms.EmployeeForm;
 import br.com.unifor.coffeecontrol.forms.UpdatedEmployeeForm;
 import br.com.unifor.coffeecontrol.modelos.Employee;
+import br.com.unifor.coffeecontrol.repositories.EmployeeRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -21,4 +22,6 @@ public interface EmployeeService {
     ResponseEntity<EmployeeDto> updateSpecificEmployeeById(int id, UpdatedEmployeeForm form);
 
     ResponseEntity<Employee> deleteSpecificEmployeeById(int id);
+
+    ResponseEntity<EmployeeDto> toggleEnableById(int id, EmployeeRepository repository);
 }

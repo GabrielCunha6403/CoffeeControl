@@ -1,8 +1,6 @@
 package br.com.unifor.coffeecontrol.services.Impl;
 
-import br.com.unifor.coffeecontrol.controllers.ProductController;
 import br.com.unifor.coffeecontrol.dtos.ProductDto;
-import br.com.unifor.coffeecontrol.dtos.ProfileDto;
 import br.com.unifor.coffeecontrol.forms.ProductForm;
 import br.com.unifor.coffeecontrol.forms.UpdatedProductForm;
 import br.com.unifor.coffeecontrol.modelos.Product;

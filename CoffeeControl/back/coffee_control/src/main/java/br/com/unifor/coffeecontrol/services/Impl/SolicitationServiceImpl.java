@@ -3,8 +3,10 @@ package br.com.unifor.coffeecontrol.services.Impl;
 import br.com.unifor.coffeecontrol.dtos.SolicitationDto;
 import br.com.unifor.coffeecontrol.forms.SolicitationForm;
 import br.com.unifor.coffeecontrol.forms.UpdatedSolicitationForm;
+import br.com.unifor.coffeecontrol.modelos.Product;
 import br.com.unifor.coffeecontrol.modelos.Solicitation;
 import br.com.unifor.coffeecontrol.repositories.EmployeeRepository;
+import br.com.unifor.coffeecontrol.repositories.ProductRepository;
 import br.com.unifor.coffeecontrol.repositories.SolicitationRepository;
 import br.com.unifor.coffeecontrol.services.SolicitationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,5 +57,14 @@ public class SolicitationServiceImpl implements SolicitationService {
     public ResponseEntity<Solicitation> deleteSpecificSolicitationById(int id) {
         solicitationRepository.deleteById(id);
         return ResponseEntity.ok().build();
+    }
+
+    @Override
+    public ResponseEntity<SolicitationDto> insertProduct(int id, ProductRepository productRepository, int id_product) {
+        Product product = productRepository.getReferenceById(id_product);
+        Solicitation solicitation = solicitationRepository.getReferenceById(id);
+        solicitation.getProducts().add(product);
+        solicitationRepository.save(solicitation);
+        return ResponseEntity.ok(new SolicitationDto(solicitation));
     }
 }

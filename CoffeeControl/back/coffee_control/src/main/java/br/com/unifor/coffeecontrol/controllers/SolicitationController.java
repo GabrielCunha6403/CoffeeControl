@@ -5,6 +5,7 @@ import br.com.unifor.coffeecontrol.forms.SolicitationForm;
 import br.com.unifor.coffeecontrol.forms.UpdatedSolicitationForm;
 import br.com.unifor.coffeecontrol.modelos.Solicitation;
 import br.com.unifor.coffeecontrol.repositories.EmployeeRepository;
+import br.com.unifor.coffeecontrol.repositories.ProductRepository;
 import br.com.unifor.coffeecontrol.repositories.SolicitationRepository;
 import br.com.unifor.coffeecontrol.services.SolicitationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +40,6 @@ public class SolicitationController {
     }
 
     @PutMapping("/{id}")
-    @Transactional
     public ResponseEntity<SolicitationDto> updateSolicitationById(@PathVariable int id, @RequestBody UpdatedSolicitationForm form){
         return solicitationService.updateSolicitationById(id, form);
     }
@@ -47,5 +47,11 @@ public class SolicitationController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Solicitation> deleteSpecificSolicitationById(@PathVariable int id){
         return solicitationService.deleteSpecificSolicitationById(id);
+    }
+
+    @PostMapping("/insert_product")
+    public ResponseEntity<SolicitationDto> insertProduct(@PathVariable int id, ProductRepository productRepository,@RequestBody int id_product) {
+        System.out.println("passou aqui");
+        return solicitationService.insertProduct(id, productRepository, id_product);
     }
 }

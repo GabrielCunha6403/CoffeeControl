@@ -14,7 +14,7 @@ public class Inventory {
     private int id;
     @Getter @Setter
     @OneToOne
-//    @Column(name = "id_product")
+    @JoinColumn(name = "id_product")
     private Product product;
     @Getter @Setter
     private int qnt_now;

@@ -25,7 +25,7 @@ public class Contribution {
     @Getter @Setter
     private LocalDate contribution_date;
     @Getter @Setter
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(name="contributions_products", joinColumns=
             {@JoinColumn(name="id_contribution")}, inverseJoinColumns=
             {@JoinColumn(name="id_product")})
