@@ -49,9 +49,9 @@ public class SolicitationController {
         return solicitationService.deleteSpecificSolicitationById(id);
     }
 
-    @PostMapping("/insert_product")
-    public ResponseEntity<SolicitationDto> insertProduct(@PathVariable int id, ProductRepository productRepository,@RequestBody int id_product) {
-        System.out.println("passou aqui");
-        return solicitationService.insertProduct(id, productRepository, id_product);
-    }
+//    @PostMapping("/insert_product/{id}")
+//    public ResponseEntity<SolicitationDto> insertProduct(@PathVariable int id, ProductRepository productRepository,@RequestBody int id_product) {
+//        System.out.println("passou aqui");
+//        return solicitationService.insertProduct(id, productRepository, id_product);
+//    }
 }

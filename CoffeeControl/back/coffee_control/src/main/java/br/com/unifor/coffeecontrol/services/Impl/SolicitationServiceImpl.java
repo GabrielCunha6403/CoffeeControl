@@ -1,13 +1,18 @@
 package br.com.unifor.coffeecontrol.services.Impl;
 
 import br.com.unifor.coffeecontrol.dtos.SolicitationDto;
+import br.com.unifor.coffeecontrol.forms.ProductForm;
 import br.com.unifor.coffeecontrol.forms.SolicitationForm;
 import br.com.unifor.coffeecontrol.forms.UpdatedSolicitationForm;
+import br.com.unifor.coffeecontrol.modelos.Employee;
+import br.com.unifor.coffeecontrol.modelos.IdClasses.SolicitationsProductsId;
 import br.com.unifor.coffeecontrol.modelos.Product;
 import br.com.unifor.coffeecontrol.modelos.Solicitation;
+import br.com.unifor.coffeecontrol.modelos.SolicitationsProducts;
 import br.com.unifor.coffeecontrol.repositories.EmployeeRepository;
 import br.com.unifor.coffeecontrol.repositories.ProductRepository;
 import br.com.unifor.coffeecontrol.repositories.SolicitationRepository;
+import br.com.unifor.coffeecontrol.repositories.SolicitationsProductsRepository;
 import br.com.unifor.coffeecontrol.services.SolicitationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -25,6 +30,10 @@ public class SolicitationServiceImpl implements SolicitationService {
     private SolicitationRepository solicitationRepository;
     @Autowired
     private EmployeeRepository employeeRepository;
+    @Autowired
+    private ProductRepository productRepository;
+    @Autowired
+    private SolicitationsProductsRepository solicitationsProductsRepository;
 
     @Override
     public Page<SolicitationDto> listSolicitations(Pageable paginacao) {
@@ -34,8 +43,20 @@ public class SolicitationServiceImpl implements SolicitationService {
 
     @Override
     public ResponseEntity<SolicitationDto> signUpSolicitation(SolicitationForm solicitationForm, UriComponentsBuilder uriBuilder) {
-        Solicitation solicitation = solicitationForm.convert(employeeRepository);
+        Employee employee = employeeRepository.getReferenceById(solicitationForm.getId_employee());
+        Solicitation solicitation = new Solicitation(solicitationForm.getName(), employee);
         solicitationRepository.save(solicitation);
+
+        System.out.println("passou aqui");
+
+        solicitation.getProducts().forEach(element -> {
+            Product product = productRepository.getReferenceById(element.getProduct().getId());
+            SolicitationsProductsId solicitationsProductsId = new SolicitationsProductsId(solicitation.getId(), product.getId());
+            SolicitationsProducts solicitationsProducts = new SolicitationsProducts(solicitationsProductsId, element.getQuantity());
+            solicitationsProducts.setProduct(product);
+            solicitationsProducts.setSolicitation(solicitation);
+            solicitationsProductsRepository.save(solicitationsProducts);
+        });
 
         URI uri = uriBuilder.path("/solicitations/{id}").buildAndExpand(solicitation.getId()).toUri();
         return ResponseEntity.created(uri).body(new SolicitationDto(solicitation));
@@ -59,12 +80,32 @@ public class SolicitationServiceImpl implements SolicitationService {
         return ResponseEntity.ok().build();
     }
 
-    @Override
-    public ResponseEntity<SolicitationDto> insertProduct(int id, ProductRepository productRepository, int id_product) {
-        Product product = productRepository.getReferenceById(id_product);
-        Solicitation solicitation = solicitationRepository.getReferenceById(id);
-        solicitation.getProducts().add(product);
-        solicitationRepository.save(solicitation);
-        return ResponseEntity.ok(new SolicitationDto(solicitation));
-    }
+//    @Override
+//    public ResponseEntity<SolicitationDto> insertProduct(int id, int id_product) {
+//        Solicitation solicitation = solicitationRepository.getReferenceById(id);
+//        Product product = productRepository.getReferenceById(id_product);
+//
+//        SolicitationsProductsId solicitationsProductsId = new SolicitationsProductsId(solicitation.getId(), product.getId());
+//        SolicitationsProducts solicitationsProducts = new SolicitationsProducts(solicitationsProductsId, );
+//
+//        return null;
+//    }
 }
+//    @Override
+//    public ResponseEntity<SolicitationDto> register(SolicitationPostForm form, UriComponentsBuilder uriBuilder) throws Exception {
+//        User user= Optional.of(userRepository.findByName(form.getUsername()).get(0)).orElseThrow(() -> new Exception("user not found"));
+//        Solicitation solicitation = new Solicitation(form,user);
+//        solicitation= solicitationRepository.save(solicitation);
+//        for(int i =0; i < form.getProducts().length;i++) {
+//            Integer productId=form.getProducts()[i].getProductId();
+//            Integer requiredAmount=form.getProducts()[i].getRequiredAmount();
+//            Product product =productRepository.findById(productId).orElseThrow(() -> new Exception("product id invalid"));
+//            SolicitationProductId solicitationProductId = new SolicitationProductId(productId,solicitation.getId());
+//            SolicitationProduct solicitationProduct=new SolicitationProduct(solicitationProductId,requiredAmount);
+//            solicitationProduct.setSolicitation(solicitation);
+//            solicitationProduct.setProduct(product);
+//            solicitationProductRepository.save(solicitationProduct);
+//        }
+//        URI uri= uriBuilder.path("solications/{id}").buildAndExpand(solicitation.getId()).toUri();
+//        return ResponseEntity.created(uri).body(new SolicitationDto(solicitation));
+//    }

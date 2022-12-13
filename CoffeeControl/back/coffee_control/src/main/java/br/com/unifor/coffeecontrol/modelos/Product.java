@@ -20,20 +20,20 @@ public class Product {
     @Getter @Setter
     private String description;
     @Getter @Setter
-    private int qnt_min_employee;
+    private int qnt_min_inventory;
     @Getter @Setter
     private Boolean enable;
     @Getter @Setter
-    @ManyToMany(mappedBy = "products")
-    private List<Contribution> contributions;
+    @OneToMany(mappedBy = "product")
+    private List<ContributionsProducts> contributions;
     @Getter @Setter
-    @ManyToMany(mappedBy = "products")
-    private List<Solicitation> solicitations;
+    @OneToMany
+    private List<SolicitationsProducts> solicitations;
 
-    public Product(String name, String description, int qnt_min_employee, Boolean enable) {
+    public Product(String name, String description, int qnt_min_inventory, Boolean enable) {
         this.name = name;
         this.description = description;
-        this.qnt_min_employee = qnt_min_employee;
+        this.qnt_min_inventory = qnt_min_inventory;
         this.enable = enable;
     }
 }

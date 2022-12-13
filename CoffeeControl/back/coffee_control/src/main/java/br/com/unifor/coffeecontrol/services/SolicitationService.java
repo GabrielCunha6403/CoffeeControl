@@ -24,5 +24,5 @@ public interface SolicitationService {
 
     ResponseEntity<Solicitation> deleteSpecificSolicitationById(int id);
 
-    ResponseEntity<SolicitationDto> insertProduct(int id, ProductRepository productRepository, int id_product);
+//    ResponseEntity<SolicitationDto> insertProduct();
 }

@@ -27,11 +27,8 @@ public class Solicitation {
     @OneToMany(mappedBy = "solicitation")
     private List<Contribution> contributions;
     @Getter @Setter
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name="solicitations_products", joinColumns=
-            {@JoinColumn(name="id_solicitation")}, inverseJoinColumns=
-            {@JoinColumn(name="id_product")})
-    private List<Product> products;
+    @OneToMany(mappedBy = "solicitation")
+    private List<SolicitationsProducts> products;
 
     public Solicitation(String name, Employee employee) {
         this.name = name;
