@@ -11,11 +11,11 @@ public class ProductForm {
     @Getter @Setter
     private String description;
     @Getter @Setter
-    private int qnt_min_employee;
+    private int qnt_min_inventory;
     @Getter @Setter
     private Boolean enable;
 
     public Product convert(ProductRepository productRepository){
-        return new Product(this.name, this.description, this.qnt_min_employee, this.enable);
+        return new Product(this.name, this.description, this.qnt_min_inventory, this.enable);
     }
 }

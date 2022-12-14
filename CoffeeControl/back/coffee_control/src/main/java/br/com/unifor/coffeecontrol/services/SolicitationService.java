@@ -2,6 +2,7 @@ package br.com.unifor.coffeecontrol.services;
 
 import br.com.unifor.coffeecontrol.dtos.SolicitationDto;
 import br.com.unifor.coffeecontrol.forms.SolicitationForm;
+import br.com.unifor.coffeecontrol.forms.SolicitationWithProductsForm;
 import br.com.unifor.coffeecontrol.forms.UpdatedSolicitationForm;
 import br.com.unifor.coffeecontrol.modelos.Solicitation;
 import br.com.unifor.coffeecontrol.repositories.ProductRepository;
@@ -16,7 +17,7 @@ public interface SolicitationService {
 
     Page<SolicitationDto> listSolicitations(Pageable paginacao);
 
-    ResponseEntity<SolicitationDto> signUpSolicitation(SolicitationForm solicitationForm, UriComponentsBuilder uriBuilder);
+    ResponseEntity<SolicitationDto> signUpSolicitation(SolicitationWithProductsForm withProductsForm, UriComponentsBuilder uriBuilder);
 
     SolicitationDto showSpecificSolicitationById(int id);
 

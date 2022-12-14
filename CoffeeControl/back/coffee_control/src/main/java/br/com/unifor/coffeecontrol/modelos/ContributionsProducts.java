@@ -1,25 +1,22 @@
 package br.com.unifor.coffeecontrol.modelos;
 
 import br.com.unifor.coffeecontrol.modelos.IdClasses.ContributionsProductsId;
-import jakarta.persistence.EmbeddedId;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.MapsId;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.*;
 
 @Getter @Setter
+@NoArgsConstructor
 @Entity(name = "contributions_products")
 public class ContributionsProducts {
     @EmbeddedId
     private ContributionsProductsId id;
     @ManyToOne
     @MapsId("id_contribution")
+    @JoinColumn(name = "id_contribution")
     private Contribution contribution;
     @ManyToOne
     @MapsId("id_product")
+    @JoinColumn(name = "id_product")
     private Product product;
     private int quantity;
 

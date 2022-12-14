@@ -2,6 +2,7 @@ package br.com.unifor.coffeecontrol.controllers;
 
 import br.com.unifor.coffeecontrol.dtos.SolicitationDto;
 import br.com.unifor.coffeecontrol.forms.SolicitationForm;
+import br.com.unifor.coffeecontrol.forms.SolicitationWithProductsForm;
 import br.com.unifor.coffeecontrol.forms.UpdatedSolicitationForm;
 import br.com.unifor.coffeecontrol.modelos.Solicitation;
 import br.com.unifor.coffeecontrol.repositories.EmployeeRepository;
@@ -30,7 +31,7 @@ public class SolicitationController {
         return solicitationService.listSolicitations(paginacao);
     }
     @PostMapping
-    public ResponseEntity<SolicitationDto> signUpSolicitation(@RequestBody SolicitationForm solicitationForm, UriComponentsBuilder uriBuilder){
+    public ResponseEntity<SolicitationDto> signUpSolicitation(@RequestBody SolicitationWithProductsForm solicitationForm, UriComponentsBuilder uriBuilder){
         return solicitationService.signUpSolicitation(solicitationForm, uriBuilder);
     }
 

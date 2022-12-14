@@ -1,15 +1,13 @@
 package br.com.unifor.coffeecontrol.services.Impl;
 
 import br.com.unifor.coffeecontrol.dtos.ContributionDto;
-import br.com.unifor.coffeecontrol.dtos.ProductDto;
-import br.com.unifor.coffeecontrol.forms.ContributionForm;
-import br.com.unifor.coffeecontrol.forms.ProductForm;
-import br.com.unifor.coffeecontrol.modelos.Contribution;
-import br.com.unifor.coffeecontrol.modelos.Product;
-import br.com.unifor.coffeecontrol.repositories.ContributionRepository;
-import br.com.unifor.coffeecontrol.repositories.EmployeeRepository;
-import br.com.unifor.coffeecontrol.repositories.ProductRepository;
+import br.com.unifor.coffeecontrol.forms.ContributionProductsForm;
+import br.com.unifor.coffeecontrol.forms.ContributionWithProductsForm;
+import br.com.unifor.coffeecontrol.modelos.*;
+import br.com.unifor.coffeecontrol.modelos.IdClasses.ContributionsProductsId;
+import br.com.unifor.coffeecontrol.repositories.*;
 import br.com.unifor.coffeecontrol.services.ContributionService;
+import br.com.unifor.coffeecontrol.services.SolicitationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,6 +16,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
+import java.time.LocalDate;
+import java.util.List;
 
 @Service
 public class ContributionServiceImpl implements ContributionService {
@@ -28,6 +28,12 @@ public class ContributionServiceImpl implements ContributionService {
     private EmployeeRepository employeeRepository;
     @Autowired
     private ProductRepository productRepository;
+    @Autowired
+    private SolicitationRepository solicitationRepository;
+    @Autowired
+    private ContributionsProductsRepository contributionsProductsRepository;
+    @Autowired
+    private SolicitationService solicitationService;
 
     @Override
     public Page<ContributionDto> listContributions(Pageable paginacao) {
@@ -36,9 +42,26 @@ public class ContributionServiceImpl implements ContributionService {
     }
 
     @Override
-    public ResponseEntity<ContributionDto> signUpContribution(ContributionForm contributionForm, UriComponentsBuilder uriBuilder) {
-        Contribution contribution = contributionForm.convert(employeeRepository);
+    public ResponseEntity<ContributionDto> signUpContribution(ContributionWithProductsForm withProductsForm, UriComponentsBuilder uriBuilder) {
+        Employee employee = employeeRepository.getReferenceById(withProductsForm.getId_employee());
+        Solicitation solicitation = solicitationRepository.getReferenceById(withProductsForm.getId_solicitation());
+
+        Contribution contribution = new Contribution(LocalDate.now(), employee, solicitation);
         contributionRepository.save(contribution);
+
+        List<ContributionProductsForm> products = withProductsForm.getProducts();
+        for (int i = 0; i < products.size(); i++){
+            ContributionProductsForm element = products.get(i);
+            Product product = productRepository.getReferenceById(element.getId_product());
+            ContributionsProductsId id = new ContributionsProductsId(contribution.getId(), product.getId());
+            ContributionsProducts contributionsProducts = new ContributionsProducts(id, withProductsForm.getProducts().get(i).getQuantity_received());
+            contributionsProducts.setContribution(contribution);
+            contributionsProducts.setProduct(product);
+
+            product.getId();
+
+            contributionsProductsRepository.save(contributionsProducts);
+        }
 
         URI uri = uriBuilder.path("/products/{id}").buildAndExpand(contribution.getId()).toUri();
         return ResponseEntity.created(uri).body(new ContributionDto(contribution));

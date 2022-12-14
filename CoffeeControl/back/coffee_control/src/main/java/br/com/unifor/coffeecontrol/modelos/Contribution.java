@@ -36,8 +36,9 @@ public class Contribution {
     @OneToMany(mappedBy = "contribution")
     private List<ContributionsProducts> products;
 
-    public Contribution(LocalDate date, Employee employee) {
+    public Contribution(LocalDate date, Employee employee, Solicitation solicitation) {
         this.setDate(date);
         this.setEmployee(employee);
+        this.setSolicitation(solicitation);
     }
 }

@@ -17,8 +17,8 @@ public class ContributionForm {
     @Getter @Setter
     private String name_employee;
 
-    public Contribution convert(EmployeeRepository employeeRepository){
-        Employee employee = employeeRepository.findByName(this.name_employee);
-        return new Contribution(this.date, employee);
-    }
+//    public Contribution convert(EmployeeRepository employeeRepository){
+//        Employee employee = employeeRepository.findByName(this.name_employee);
+//        return new Contribution(this.date, employee);
+//    }
 }

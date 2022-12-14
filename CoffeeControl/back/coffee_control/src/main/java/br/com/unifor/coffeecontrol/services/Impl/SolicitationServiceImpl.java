@@ -1,8 +1,9 @@
 package br.com.unifor.coffeecontrol.services.Impl;
 
 import br.com.unifor.coffeecontrol.dtos.SolicitationDto;
-import br.com.unifor.coffeecontrol.forms.ProductForm;
 import br.com.unifor.coffeecontrol.forms.SolicitationForm;
+import br.com.unifor.coffeecontrol.forms.SolicitationProductsForm;
+import br.com.unifor.coffeecontrol.forms.SolicitationWithProductsForm;
 import br.com.unifor.coffeecontrol.forms.UpdatedSolicitationForm;
 import br.com.unifor.coffeecontrol.modelos.Employee;
 import br.com.unifor.coffeecontrol.modelos.IdClasses.SolicitationsProductsId;
@@ -22,6 +23,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 
 @Service
 public class SolicitationServiceImpl implements SolicitationService {
@@ -42,21 +44,21 @@ public class SolicitationServiceImpl implements SolicitationService {
     }
 
     @Override
-    public ResponseEntity<SolicitationDto> signUpSolicitation(SolicitationForm solicitationForm, UriComponentsBuilder uriBuilder) {
-        Employee employee = employeeRepository.getReferenceById(solicitationForm.getId_employee());
-        Solicitation solicitation = new Solicitation(solicitationForm.getName(), employee);
+    public ResponseEntity<SolicitationDto> signUpSolicitation(SolicitationWithProductsForm withProductsForm, UriComponentsBuilder uriBuilder) {
+        Employee employee = employeeRepository.getReferenceById(withProductsForm.getId_employee());
+        Solicitation solicitation = new Solicitation(withProductsForm.getName(), employee);
         solicitationRepository.save(solicitation);
 
-        System.out.println("passou aqui");
-
-        solicitation.getProducts().forEach(element -> {
-            Product product = productRepository.getReferenceById(element.getProduct().getId());
+        List<SolicitationProductsForm> productsForm = withProductsForm.getProducts();
+        for (int i = 0; i < withProductsForm.getProducts().size(); i++){
+            SolicitationProductsForm element = productsForm.get(i);
+            Product product = productRepository.getReferenceById(element.getId_product());
             SolicitationsProductsId solicitationsProductsId = new SolicitationsProductsId(solicitation.getId(), product.getId());
-            SolicitationsProducts solicitationsProducts = new SolicitationsProducts(solicitationsProductsId, element.getQuantity());
+            SolicitationsProducts solicitationsProducts = new SolicitationsProducts(solicitationsProductsId, product.getQnt_min_inventory());
             solicitationsProducts.setProduct(product);
             solicitationsProducts.setSolicitation(solicitation);
             solicitationsProductsRepository.save(solicitationsProducts);
-        });
+        };
 
         URI uri = uriBuilder.path("/solicitations/{id}").buildAndExpand(solicitation.getId()).toUri();
         return ResponseEntity.created(uri).body(new SolicitationDto(solicitation));

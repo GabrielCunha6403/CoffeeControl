@@ -1,5 +1,7 @@
 package br.com.unifor.coffeecontrol.modelos;
 
+import br.com.unifor.coffeecontrol.forms.ProductForm;
+import br.com.unifor.coffeecontrol.forms.SolicitationProductsForm;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -35,4 +37,11 @@ public class Solicitation {
         this.date = LocalDate.now();
         this.employee = employee;
     }
+
+    public Solicitation(String name, Employee employee, List<ProductForm> products) {
+        this.name = name;
+        this.employee = employee;
+
+    }
+
 }
