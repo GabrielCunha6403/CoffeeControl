@@ -17,6 +17,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -50,6 +51,12 @@ public class ContributionServiceImpl implements ContributionService {
         contributionRepository.save(contribution);
 
         List<ContributionProductsForm> products = withProductsForm.getProducts();
+        List<Product> productList = new ArrayList<Product>();
+//        products.forEach(element -> {
+//            Product product = productRepository.getReferenceById(element.getId_product());
+//            productList.add(product);
+//        });
+
         for (int i = 0; i < products.size(); i++){
             ContributionProductsForm element = products.get(i);
             Product product = productRepository.getReferenceById(element.getId_product());
@@ -57,8 +64,6 @@ public class ContributionServiceImpl implements ContributionService {
             ContributionsProducts contributionsProducts = new ContributionsProducts(id, withProductsForm.getProducts().get(i).getQuantity_received());
             contributionsProducts.setContribution(contribution);
             contributionsProducts.setProduct(product);
-
-            product.getId();
 
             contributionsProductsRepository.save(contributionsProducts);
         }

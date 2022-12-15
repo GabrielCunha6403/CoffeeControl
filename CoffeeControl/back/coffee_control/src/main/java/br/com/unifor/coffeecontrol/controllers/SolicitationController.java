@@ -5,6 +5,7 @@ import br.com.unifor.coffeecontrol.forms.SolicitationForm;
 import br.com.unifor.coffeecontrol.forms.SolicitationWithProductsForm;
 import br.com.unifor.coffeecontrol.forms.UpdatedSolicitationForm;
 import br.com.unifor.coffeecontrol.modelos.Solicitation;
+import br.com.unifor.coffeecontrol.modelos.SolicitationsProducts;
 import br.com.unifor.coffeecontrol.repositories.EmployeeRepository;
 import br.com.unifor.coffeecontrol.repositories.ProductRepository;
 import br.com.unifor.coffeecontrol.repositories.SolicitationRepository;
@@ -50,6 +51,10 @@ public class SolicitationController {
         return solicitationService.deleteSpecificSolicitationById(id);
     }
 
+    @GetMapping("/{id_solicitation}/has/{id_product}")
+    public Boolean findProductInSolicitation(@PathVariable Integer id_solicitation, @PathVariable Integer id_product){
+        return solicitationService.findProductInSolicitation(id_solicitation, id_product);
+    }
 //    @PostMapping("/insert_product/{id}")
 //    public ResponseEntity<SolicitationDto> insertProduct(@PathVariable int id, ProductRepository productRepository,@RequestBody int id_product) {
 //        System.out.println("passou aqui");

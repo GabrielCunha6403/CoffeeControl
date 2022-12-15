@@ -1,7 +1,6 @@
 package br.com.unifor.coffeecontrol.services.Impl;
 
 import br.com.unifor.coffeecontrol.dtos.SolicitationDto;
-import br.com.unifor.coffeecontrol.forms.SolicitationForm;
 import br.com.unifor.coffeecontrol.forms.SolicitationProductsForm;
 import br.com.unifor.coffeecontrol.forms.SolicitationWithProductsForm;
 import br.com.unifor.coffeecontrol.forms.UpdatedSolicitationForm;
@@ -80,6 +79,10 @@ public class SolicitationServiceImpl implements SolicitationService {
     public ResponseEntity<Solicitation> deleteSpecificSolicitationById(int id) {
         solicitationRepository.deleteById(id);
         return ResponseEntity.ok().build();
+    }
+    @Override
+    public Boolean findProductInSolicitation(Integer id_solicitation, Integer id_product){
+        return solicitationsProductsRepository.findProductInSolicitation(id_solicitation, id_product);
     }
 
 //    @Override

@@ -5,6 +5,7 @@ import br.com.unifor.coffeecontrol.forms.SolicitationForm;
 import br.com.unifor.coffeecontrol.forms.SolicitationWithProductsForm;
 import br.com.unifor.coffeecontrol.forms.UpdatedSolicitationForm;
 import br.com.unifor.coffeecontrol.modelos.Solicitation;
+import br.com.unifor.coffeecontrol.modelos.SolicitationsProducts;
 import br.com.unifor.coffeecontrol.repositories.ProductRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,6 +25,8 @@ public interface SolicitationService {
     ResponseEntity<SolicitationDto> updateSolicitationById(int id, UpdatedSolicitationForm form);
 
     ResponseEntity<Solicitation> deleteSpecificSolicitationById(int id);
+
+    Boolean findProductInSolicitation(Integer id_solicitation, Integer id_product);
 
 //    ResponseEntity<SolicitationDto> insertProduct();
 }
