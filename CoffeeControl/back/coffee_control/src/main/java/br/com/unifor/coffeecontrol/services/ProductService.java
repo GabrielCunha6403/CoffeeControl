@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.util.List;
+
 @Service
 public interface ProductService{
     Page<ProductDto> listProducts(Pageable paginacao);
@@ -21,5 +23,7 @@ public interface ProductService{
     ResponseEntity<ProductDto> updateSpecificProductById(int id, UpdatedProductForm form);
 
     ResponseEntity<Product> deleteSpecificProductById(int id);
+
+    List<Object> genericFilterProduct(ProductForm productForm);
 
 }

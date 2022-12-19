@@ -11,7 +11,7 @@ public class ProductForm {
     @Getter @Setter
     private String description;
     @Getter @Setter
-    private int qnt_min_inventory;
+    private Integer qnt_min_inventory;
     @Getter @Setter
     private Boolean enable;
 

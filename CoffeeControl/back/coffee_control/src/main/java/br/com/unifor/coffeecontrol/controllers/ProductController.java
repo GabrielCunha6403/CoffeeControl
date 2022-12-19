@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.net.URI;
+import java.util.List;
 
 @RequestMapping("/products")
 @RestController
@@ -47,5 +47,9 @@ public class ProductController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Product> deleteSpecificProductById(@PathVariable int id){
         return productService.deleteSpecificProductById(id);
+    }
+    @PostMapping("/filter")
+    public List<Object> genericFilterProduct(@RequestBody ProductForm productForm) {
+        return productService.genericFilterProduct(productForm);
     }
 }

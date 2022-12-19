@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
+import java.util.Objects;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -51,6 +53,11 @@ public class ProductServiceImpl implements ProductService {
     public ResponseEntity<Product> deleteSpecificProductById(int id) {
         productRepository.deleteById(id);
         return ResponseEntity.ok().build();
+    }
+
+    @Override
+    public List<Object> genericFilterProduct(ProductForm productForm) {
+        return productRepository.genericFilterProduct(productForm.getName(), productForm.getDescription(), productForm.getQnt_min_inventory(), productForm.getEnable());
     }
 
 }
