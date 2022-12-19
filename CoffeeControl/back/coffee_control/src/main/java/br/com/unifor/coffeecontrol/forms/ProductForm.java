@@ -1,5 +1,6 @@
 package br.com.unifor.coffeecontrol.forms;
 
+import br.com.unifor.coffeecontrol.modelos.Inventory;
 import br.com.unifor.coffeecontrol.modelos.Product;
 import br.com.unifor.coffeecontrol.repositories.ProductRepository;
 import lombok.Getter;
@@ -11,11 +12,11 @@ public class ProductForm {
     @Getter @Setter
     private String description;
     @Getter @Setter
-    private Integer qnt_min_inventory;
-    @Getter @Setter
     private Boolean enable;
+    @Getter @Setter
+    private InvetoryInProductForm inventory;
 
-    public Product convert(ProductRepository productRepository){
-        return new Product(this.name, this.description, this.qnt_min_inventory, this.enable);
+    public Product convert(){
+        return new Product(this.name, this.description, this.enable, this.inventory.convert());
     }
 }

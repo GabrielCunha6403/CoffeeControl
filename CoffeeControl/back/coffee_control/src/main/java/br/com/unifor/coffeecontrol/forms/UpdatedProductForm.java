@@ -19,7 +19,6 @@ public class UpdatedProductForm {
         Product product = repository.getReferenceById(id);
         product.setName(this.getName());
         product.setDescription(this.getDescription());
-        product.setQnt_min_inventory(this.getQnt_min_inventory());
         product.setEnable(this.getEnable());
 
         return product;

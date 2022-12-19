@@ -50,15 +50,11 @@ public class ContributionServiceImpl implements ContributionService {
         Contribution contribution = new Contribution(LocalDate.now(), employee, solicitation);
         contributionRepository.save(contribution);
 
-        List<ContributionProductsForm> products = withProductsForm.getProducts();
-        List<Product> productList = new ArrayList<Product>();
-//        products.forEach(element -> {
-//            Product product = productRepository.getReferenceById(element.getId_product());
-//            productList.add(product);
-//        });
+        List<ContributionProductsForm> productsInContribution = withProductsForm.getProducts();
+        List<SolicitationsProducts> productsInSolicitation = solicitation.getProducts();
 
-        for (int i = 0; i < products.size(); i++){
-            ContributionProductsForm element = products.get(i);
+        for (int i = 0; i < productsInContribution.size(); i++){
+            ContributionProductsForm element = productsInContribution.get(i);
             Product product = productRepository.getReferenceById(element.getId_product());
             ContributionsProductsId id = new ContributionsProductsId(contribution.getId(), product.getId());
             ContributionsProducts contributionsProducts = new ContributionsProducts(id, withProductsForm.getProducts().get(i).getQuantity_received());
@@ -71,11 +67,4 @@ public class ContributionServiceImpl implements ContributionService {
         URI uri = uriBuilder.path("/products/{id}").buildAndExpand(contribution.getId()).toUri();
         return ResponseEntity.created(uri).body(new ContributionDto(contribution));
     }
-
-//    @Override
-//    public ResponseEntity<ContributionDto> addProductById(int id, ProductForm productForm){
-//        Contribution contribution = contributionRepository.getReferenceById(id);
-//        Product product = productForm.convert(productRepository);
-//        contribution.getProducts().add(product);
-//    }
 }

@@ -12,14 +12,11 @@ public class ProductDto {
     @Getter
     private String description;
     @Getter
-    private int qnt_min_inventory;
-    @Getter
     private Boolean enable;
     public ProductDto(Product product) {
         this.id = product.getId();
         this.name = product.getName();
         this.description = product.getDescription();
-        this.qnt_min_inventory = product.getQnt_min_inventory();
         this.enable = product.getEnable();
     }
 

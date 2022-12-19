@@ -4,6 +4,7 @@ import br.com.unifor.coffeecontrol.dtos.ProductDto;
 import br.com.unifor.coffeecontrol.forms.ProductForm;
 import br.com.unifor.coffeecontrol.forms.UpdatedProductForm;
 import br.com.unifor.coffeecontrol.modelos.Product;
+import br.com.unifor.coffeecontrol.repositories.InventoryRepository;
 import br.com.unifor.coffeecontrol.repositories.ProductRepository;
 import br.com.unifor.coffeecontrol.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,9 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductRepository productRepository;
 
+    @Autowired
+    private InventoryRepository inventoryRepository;
+
     @Override
     public Page<ProductDto> listProducts(Pageable paginacao) {
         Page<Product> products = productRepository.findAll(paginacao);
@@ -30,7 +34,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ResponseEntity<ProductDto> signUpProduct(ProductForm productForm, UriComponentsBuilder uriBuilder) {
-        Product product = productForm.convert(productRepository);
+        Product product = productForm.convert();
+        product.getInventory();
+        inventoryRepository.save(product.getInventory());
         productRepository.save(product);
 
         URI uri = uriBuilder.path("/products/{id}").buildAndExpand(product.getId()).toUri();
@@ -57,7 +63,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Object> genericFilterProduct(ProductForm productForm) {
-        return productRepository.genericFilterProduct(productForm.getName(), productForm.getDescription(), productForm.getQnt_min_inventory(), productForm.getEnable());
+        return productRepository.genericFilterProduct(productForm.getName(), productForm.getDescription(), productForm.getEnable());
     }
 
 }

@@ -13,11 +13,12 @@ public class Inventory {
     @Getter @Setter
     private int id;
     @Getter @Setter
-    @OneToOne
-    @JoinColumn(name = "id_product")
-    private Product product;
-    @Getter @Setter
     private int qnt_now;
     @Getter @Setter
     private int qnt_min;
+
+    public Inventory(Integer qnt_now, Integer qnt_min) {
+        this.qnt_now = qnt_now;
+        this.qnt_min = qnt_min;
+    }
 }

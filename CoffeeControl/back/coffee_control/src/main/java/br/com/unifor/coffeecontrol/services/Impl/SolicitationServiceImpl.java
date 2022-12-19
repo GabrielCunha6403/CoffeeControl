@@ -53,7 +53,7 @@ public class SolicitationServiceImpl implements SolicitationService {
             SolicitationProductsForm element = productsForm.get(i);
             Product product = productRepository.getReferenceById(element.getId_product());
             SolicitationsProductsId solicitationsProductsId = new SolicitationsProductsId(solicitation.getId(), product.getId());
-            SolicitationsProducts solicitationsProducts = new SolicitationsProducts(solicitationsProductsId, product.getQnt_min_inventory());
+            SolicitationsProducts solicitationsProducts = new SolicitationsProducts(solicitationsProductsId, product.getInventory().getQnt_min());
             solicitationsProducts.setProduct(product);
             solicitationsProducts.setSolicitation(solicitation);
             solicitationsProductsRepository.save(solicitationsProducts);
