@@ -13,6 +13,11 @@ public class UpdatedInventoryForm {
     @Getter @Setter
     private Integer qnt_min;
 
+    public UpdatedInventoryForm(int count, int qnt_min) {
+        this.qnt_now = count;
+        this.qnt_min = qnt_min;
+    }
+
     public Inventory update(int id, InventoryRepository repository){
         Inventory inventory = repository.getReferenceById(id);
         inventory.setQnt_now(this.qnt_now);

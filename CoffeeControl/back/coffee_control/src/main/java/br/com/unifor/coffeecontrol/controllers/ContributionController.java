@@ -30,4 +30,9 @@ public class ContributionController {
     public ResponseEntity<ContributionDto> signUpContribution(@RequestBody ContributionWithProductsForm contributionForm, UriComponentsBuilder uriBuilder){
         return contributionService.signUpContribution(contributionForm, uriBuilder);
     }
+
+    @GetMapping("/show/{id}")
+    public void show(@PathVariable int id){
+        contributionService.show(id);
+    }
 }

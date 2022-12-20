@@ -3,10 +3,13 @@ package br.com.unifor.coffeecontrol.services.Impl;
 import br.com.unifor.coffeecontrol.dtos.ContributionDto;
 import br.com.unifor.coffeecontrol.forms.ContributionProductsForm;
 import br.com.unifor.coffeecontrol.forms.ContributionWithProductsForm;
+import br.com.unifor.coffeecontrol.forms.UpdatedInventoryForm;
+import br.com.unifor.coffeecontrol.forms.UpdatedProductForm;
 import br.com.unifor.coffeecontrol.modelos.*;
 import br.com.unifor.coffeecontrol.modelos.IdClasses.ContributionsProductsId;
 import br.com.unifor.coffeecontrol.repositories.*;
 import br.com.unifor.coffeecontrol.services.ContributionService;
+import br.com.unifor.coffeecontrol.services.InventoryService;
 import br.com.unifor.coffeecontrol.services.SolicitationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,8 +20,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ContributionServiceImpl implements ContributionService {
@@ -34,7 +37,7 @@ public class ContributionServiceImpl implements ContributionService {
     @Autowired
     private ContributionsProductsRepository contributionsProductsRepository;
     @Autowired
-    private SolicitationService solicitationService;
+    private InventoryService inventoryService;
 
     @Override
     public Page<ContributionDto> listContributions(Pageable paginacao) {
@@ -51,20 +54,39 @@ public class ContributionServiceImpl implements ContributionService {
         contributionRepository.save(contribution);
 
         List<ContributionProductsForm> productsInContribution = withProductsForm.getProducts();
-        List<SolicitationsProducts> productsInSolicitation = solicitation.getProducts();
 
         for (int i = 0; i < productsInContribution.size(); i++){
             ContributionProductsForm element = productsInContribution.get(i);
-            Product product = productRepository.getReferenceById(element.getId_product());
+            Optional<Product> productOp = productRepository.findById(element.getId_product());
+            Product product = productOp.get();
             ContributionsProductsId id = new ContributionsProductsId(contribution.getId(), product.getId());
             ContributionsProducts contributionsProducts = new ContributionsProducts(id, withProductsForm.getProducts().get(i).getQuantity_received());
             contributionsProducts.setContribution(contribution);
             contributionsProducts.setProduct(product);
 
             contributionsProductsRepository.save(contributionsProducts);
+
+
+            int count = contributionsProductsRepository.getReceivedAmountOfOneProductById(product.getId());
+            UpdatedInventoryForm form = new UpdatedInventoryForm(count, product.getInventory().getQnt_min());
+            inventoryService.updateSpecificInventoryById(product.getInventory().getId(), form);
+
+            if(count >= product.getInventory().getQnt_min()){
+                System.out.println("salvado");
+            }
+
         }
 
-        URI uri = uriBuilder.path("/products/{id}").buildAndExpand(contribution.getId()).toUri();
+        URI uri = uriBuilder.path("/contributions/{id}").buildAndExpand(contribution.getId()).toUri();
         return ResponseEntity.created(uri).body(new ContributionDto(contribution));
     }
+
+    @Override
+    public void show(int id){
+        Solicitation solicitation = solicitationRepository.getReferenceById(id);
+        System.out.println("lll" + solicitation.getProducts());
+        solicitation.getListOfProducts(productRepository);
+    }
+
+
 }

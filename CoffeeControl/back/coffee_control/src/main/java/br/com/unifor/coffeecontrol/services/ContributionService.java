@@ -14,4 +14,7 @@ public interface ContributionService {
     Page<ContributionDto> listContributions(Pageable paginacao);
 
     ResponseEntity<ContributionDto> signUpContribution(ContributionWithProductsForm withProductsForm, UriComponentsBuilder uriBuilder);
+
+    void show(int id);
+
 }

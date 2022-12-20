@@ -15,6 +15,10 @@ public class UpdatedProductForm {
     @Getter @Setter
     private Boolean enable;
 
+    public UpdatedProductForm(int count) {
+
+    }
+
     public Product update(int id, ProductRepository repository){
         Product product = repository.getReferenceById(id);
         product.setName(this.getName());

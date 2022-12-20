@@ -9,10 +9,7 @@ import br.com.unifor.coffeecontrol.modelos.IdClasses.SolicitationsProductsId;
 import br.com.unifor.coffeecontrol.modelos.Product;
 import br.com.unifor.coffeecontrol.modelos.Solicitation;
 import br.com.unifor.coffeecontrol.modelos.SolicitationsProducts;
-import br.com.unifor.coffeecontrol.repositories.EmployeeRepository;
-import br.com.unifor.coffeecontrol.repositories.ProductRepository;
-import br.com.unifor.coffeecontrol.repositories.SolicitationRepository;
-import br.com.unifor.coffeecontrol.repositories.SolicitationsProductsRepository;
+import br.com.unifor.coffeecontrol.repositories.*;
 import br.com.unifor.coffeecontrol.services.SolicitationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -35,6 +32,8 @@ public class SolicitationServiceImpl implements SolicitationService {
     private ProductRepository productRepository;
     @Autowired
     private SolicitationsProductsRepository solicitationsProductsRepository;
+    @Autowired
+    private ContributionsProductsRepository contributionsProductsRepository;
 
     @Override
     public Page<SolicitationDto> listSolicitations(Pageable paginacao) {
@@ -66,6 +65,10 @@ public class SolicitationServiceImpl implements SolicitationService {
     @Override
     public SolicitationDto showSpecificSolicitationById(int id) {
         Solicitation solicitation = solicitationRepository.getReferenceById(id);
+        solicitation.getListOfProducts(productRepository).forEach(product -> {
+            System.out.print(product.getId() + " - ");
+            System.out.println(product.getName());
+        });
         return new SolicitationDto(solicitation);
     }
 
@@ -83,6 +86,13 @@ public class SolicitationServiceImpl implements SolicitationService {
     @Override
     public Boolean findProductInSolicitation(Integer id_solicitation, Integer id_product){
         return solicitationsProductsRepository.findProductInSolicitation(id_solicitation, id_product);
+    }
+
+    @Override
+    public Integer count(Integer id){
+        Integer count = contributionsProductsRepository.getReceivedAmountOfOneProductById(id);
+        System.out.println(count);
+        return count;
     }
 
 //    @Override

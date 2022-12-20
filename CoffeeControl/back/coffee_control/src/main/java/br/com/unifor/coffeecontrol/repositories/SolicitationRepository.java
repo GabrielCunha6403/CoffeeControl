@@ -11,6 +11,5 @@ public interface SolicitationRepository extends JpaRepository<Solicitation, Inte
     Solicitation findById(int id);
 
     Solicitation findByName(String name);
-//    @Query("")
-//    void updateAuxiliarTable(SolicitationForm solicitationForm);
+
 }

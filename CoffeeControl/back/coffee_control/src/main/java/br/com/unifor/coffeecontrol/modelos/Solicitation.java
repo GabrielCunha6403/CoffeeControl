@@ -2,33 +2,31 @@ package br.com.unifor.coffeecontrol.modelos;
 
 import br.com.unifor.coffeecontrol.forms.ProductForm;
 import br.com.unifor.coffeecontrol.forms.SolicitationProductsForm;
+import br.com.unifor.coffeecontrol.repositories.ProductRepository;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name = "solicitations")
 @NoArgsConstructor
+@Getter @Setter
 public class Solicitation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Getter @Setter
     private int id;
-    @Getter @Setter
     @ManyToOne
     @JoinColumn(name = "id_employee")
     private Employee employee;
-    @Getter @Setter
     private String name;
-    @Getter @Setter
     private LocalDate date;
-    @Getter @Setter
+    private Boolean enable;
     @OneToMany(mappedBy = "solicitation")
     private List<Contribution> contributions;
-    @Getter @Setter
     @OneToMany(mappedBy = "solicitation")
     private List<SolicitationsProducts> products;
 
@@ -42,6 +40,15 @@ public class Solicitation {
         this.name = name;
         this.employee = employee;
 
+    }
+
+    public List<Product> getListOfProducts(ProductRepository repository){
+        List<Product> productList = new ArrayList<Product>();
+        this.getProducts().forEach( product -> {
+            productList.add(product.getProduct());
+        });
+
+        return productList;
     }
 
 }

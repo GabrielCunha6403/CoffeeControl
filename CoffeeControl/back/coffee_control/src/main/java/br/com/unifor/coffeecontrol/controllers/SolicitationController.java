@@ -10,6 +10,7 @@ import br.com.unifor.coffeecontrol.repositories.EmployeeRepository;
 import br.com.unifor.coffeecontrol.repositories.ProductRepository;
 import br.com.unifor.coffeecontrol.repositories.SolicitationRepository;
 import br.com.unifor.coffeecontrol.services.SolicitationService;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -55,9 +56,9 @@ public class SolicitationController {
     public Boolean findProductInSolicitation(@PathVariable Integer id_solicitation, @PathVariable Integer id_product){
         return solicitationService.findProductInSolicitation(id_solicitation, id_product);
     }
-//    @PostMapping("/insert_product/{id}")
-//    public ResponseEntity<SolicitationDto> insertProduct(@PathVariable int id, ProductRepository productRepository,@RequestBody int id_product) {
-//        System.out.println("passou aqui");
-//        return solicitationService.insertProduct(id, productRepository, id_product);
-//    }
+
+    @GetMapping("/count/{id}")
+    public Integer count(@PathVariable Integer id){
+        return solicitationService.count(id);
+    }
 }
