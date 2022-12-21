@@ -1,5 +1,6 @@
 package br.com.unifor.coffeecontrol.services.Impl;
 
+import br.com.unifor.coffeecontrol.dtos.SolicitationDetailDto;
 import br.com.unifor.coffeecontrol.dtos.SolicitationDto;
 import br.com.unifor.coffeecontrol.forms.SolicitationProductsForm;
 import br.com.unifor.coffeecontrol.forms.SolicitationWithProductsForm;
@@ -39,6 +40,11 @@ public class SolicitationServiceImpl implements SolicitationService {
     public Page<SolicitationDto> listSolicitations(Pageable paginacao) {
         Page<Solicitation> solicitation = solicitationRepository.findAll(paginacao);
         return SolicitationDto.convert(solicitation);
+    }
+    @Override
+    public Page<SolicitationDetailDto> listSolicitationDetail(Pageable paginacao) {
+        Page<Solicitation> solicitation = solicitationRepository.findAll(paginacao);
+        return SolicitationDetailDto.convert(solicitation);
     }
 
     @Override

@@ -10,26 +10,19 @@ import java.util.List;
 
 @Entity(name = "employees")
 @NoArgsConstructor
+@Getter @Setter
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Getter @Setter
     private int id;
-    @Getter @Setter
     private String name;
-    @Getter @Setter
-    private int registration;
-    @Getter @Setter
+    private Integer registration;
     private String password;
-    @Getter @Setter
     private Boolean enable;
-    @Getter @Setter
     @OneToMany(mappedBy = "employee")
     private List<Contribution> contributions;
-    @Getter @Setter
     @OneToMany(mappedBy = "employee")
     private List<Solicitation> solicitations;
-    @Getter @Setter
     @ManyToOne
     @JoinColumn(name = "id_profile")
     private Profile profile;
@@ -38,5 +31,12 @@ public class Employee {
         this.name = name;
         this.registration = registration;
         this.password = password;
+    }
+
+    public Employee(String name, Integer registration, String password, Boolean enable) {
+        this.name = name;
+        this.registration = registration;
+        this.password = password;
+        this.enable = enable;
     }
 }

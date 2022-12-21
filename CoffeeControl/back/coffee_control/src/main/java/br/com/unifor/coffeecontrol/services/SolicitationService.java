@@ -1,5 +1,6 @@
 package br.com.unifor.coffeecontrol.services;
 
+import br.com.unifor.coffeecontrol.dtos.SolicitationDetailDto;
 import br.com.unifor.coffeecontrol.dtos.SolicitationDto;
 import br.com.unifor.coffeecontrol.forms.SolicitationWithProductsForm;
 import br.com.unifor.coffeecontrol.forms.UpdatedSolicitationForm;
@@ -14,6 +15,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 public interface SolicitationService {
 
     Page<SolicitationDto> listSolicitations(Pageable paginacao);
+
+    Page<SolicitationDetailDto> listSolicitationDetail(Pageable paginacao);
 
     ResponseEntity<SolicitationDto> signUpSolicitation(SolicitationWithProductsForm withProductsForm, UriComponentsBuilder uriBuilder);
 

@@ -1,5 +1,6 @@
 package br.com.unifor.coffeecontrol.services.Impl;
 
+import br.com.unifor.coffeecontrol.dtos.ProductDetailDto;
 import br.com.unifor.coffeecontrol.dtos.ProductDto;
 import br.com.unifor.coffeecontrol.forms.ProductForm;
 import br.com.unifor.coffeecontrol.forms.UpdatedProductForm;
@@ -16,7 +17,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
-import java.util.Objects;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -30,6 +30,11 @@ public class ProductServiceImpl implements ProductService {
     public Page<ProductDto> listProducts(Pageable paginacao) {
         Page<Product> products = productRepository.findAll(paginacao);
         return ProductDto.convert(products);
+    }
+    @Override
+    public Page<ProductDetailDto> listProductDetail(Pageable paginacao) {
+        Page<Product> products = productRepository.findAll(paginacao);
+        return ProductDetailDto.convert(products);
     }
 
     @Override

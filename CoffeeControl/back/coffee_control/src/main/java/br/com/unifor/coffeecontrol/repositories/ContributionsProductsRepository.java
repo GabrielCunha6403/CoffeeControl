@@ -10,4 +10,6 @@ public interface ContributionsProductsRepository extends JpaRepository<Contribut
 
     @Query(value = "select sum(quantity) from contributions_products where id_product = :id", nativeQuery = true)
     Integer getReceivedAmountOfOneProductById(Integer id);
+
+
 }

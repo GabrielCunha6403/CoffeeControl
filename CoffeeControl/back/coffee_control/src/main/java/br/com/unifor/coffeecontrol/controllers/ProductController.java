@@ -1,5 +1,6 @@
 package br.com.unifor.coffeecontrol.controllers;
 
+import br.com.unifor.coffeecontrol.dtos.ProductDetailDto;
 import br.com.unifor.coffeecontrol.dtos.ProductDto;
 import br.com.unifor.coffeecontrol.forms.ProductForm;
 import br.com.unifor.coffeecontrol.forms.UpdatedProductForm;
@@ -18,7 +19,6 @@ import java.util.List;
 @RequestMapping("/products")
 @RestController
 public class ProductController {
-    //GET, POST, DELETE
 
     @Autowired
     private ProductService productService;
@@ -26,6 +26,10 @@ public class ProductController {
     @GetMapping
     public Page<ProductDto> listProducts(Pageable paginacao) {
         return productService.listProducts(paginacao);
+    }
+    @GetMapping("/detail")
+    public Page<ProductDetailDto> listProductDetail(Pageable paginacao) {
+        return productService.listProductDetail(paginacao);
     }
 
     @PostMapping

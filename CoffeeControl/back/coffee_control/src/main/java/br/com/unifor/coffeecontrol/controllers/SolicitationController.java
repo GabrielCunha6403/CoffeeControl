@@ -1,5 +1,6 @@
 package br.com.unifor.coffeecontrol.controllers;
 
+import br.com.unifor.coffeecontrol.dtos.SolicitationDetailDto;
 import br.com.unifor.coffeecontrol.dtos.SolicitationDto;
 import br.com.unifor.coffeecontrol.forms.SolicitationForm;
 import br.com.unifor.coffeecontrol.forms.SolicitationWithProductsForm;
@@ -31,6 +32,10 @@ public class SolicitationController {
     @GetMapping
     public Page<SolicitationDto> listSolicitations(Pageable paginacao) {
         return solicitationService.listSolicitations(paginacao);
+    }
+    @GetMapping("/detail")
+    public Page<SolicitationDetailDto> listSolicitationDetail(Pageable paginacao) {
+        return solicitationService.listSolicitationDetail(paginacao);
     }
     @PostMapping
     public ResponseEntity<SolicitationDto> signUpSolicitation(@RequestBody SolicitationWithProductsForm solicitationForm, UriComponentsBuilder uriBuilder){

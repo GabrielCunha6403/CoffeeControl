@@ -14,9 +14,20 @@ public class EmployeeForm {
     private int registration;
     @Getter @Setter
     private String password;
+    @Getter @Setter
+    private Boolean enable;
+    @Getter @Setter
+    private Integer profile;
 
     public Employee convert(EmployeeRepository employeeRepository){
         Employee employee = employeeRepository.findByName(this.name);
         return new Employee(this.name, this.registration, this.password);
+    }
+
+    public EmployeeForm(String name, int registration, Boolean enable, Integer profile) {
+        this.name = name;
+        this.registration = registration;
+        this.enable = enable;
+        this.profile = profile;
     }
 }

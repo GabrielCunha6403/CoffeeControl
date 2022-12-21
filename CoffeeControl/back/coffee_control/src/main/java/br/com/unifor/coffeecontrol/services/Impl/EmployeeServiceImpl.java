@@ -1,5 +1,6 @@
 package br.com.unifor.coffeecontrol.services.Impl;
 
+import br.com.unifor.coffeecontrol.dtos.EmployeeDetailDto;
 import br.com.unifor.coffeecontrol.dtos.EmployeeDto;
 import br.com.unifor.coffeecontrol.forms.EmployeeForm;
 import br.com.unifor.coffeecontrol.forms.UpdatedEmployeeForm;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -24,6 +26,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Page<EmployeeDto> listEmployees(Pageable paginacao) {
         Page<Employee> employees = employeeRepository.findAll(paginacao);
         return EmployeeDto.convert(employees);
+    }
+    @Override
+    public Page<EmployeeDetailDto> listEmployeeDetail(Pageable paginacao) {
+        Page<Employee> employees = employeeRepository.findAll(paginacao);
+        return EmployeeDetailDto.convert(employees);
     }
 
     @Override
@@ -59,5 +66,10 @@ public class EmployeeServiceImpl implements EmployeeService {
         Employee employee = repository.getReferenceById(id);
         employee.setEnable(!employee.getEnable());
         return ResponseEntity.ok(new EmployeeDto(employee));
+    }
+
+    @Override
+    public List<Object> genericFilter(EmployeeForm form) {
+        return employeeRepository.genericFilter(form.getName(), form.getRegistration(), form.getEnable(), form.getProfile());
     }
 }

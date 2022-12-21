@@ -37,6 +37,8 @@ public class ContributionServiceImpl implements ContributionService {
     @Autowired
     private ContributionsProductsRepository contributionsProductsRepository;
     @Autowired
+    private InventoryRepository inventoryRepository;
+    @Autowired
     private InventoryService inventoryService;
 
     @Override
@@ -66,14 +68,14 @@ public class ContributionServiceImpl implements ContributionService {
 
             contributionsProductsRepository.save(contributionsProducts);
 
-
-            int count = contributionsProductsRepository.getReceivedAmountOfOneProductById(product.getId());
+            int count = product.getInventory().getQnt_now() + contributionsProducts.getQuantity();
             UpdatedInventoryForm form = new UpdatedInventoryForm(count, product.getInventory().getQnt_min());
             inventoryService.updateSpecificInventoryById(product.getInventory().getId(), form);
+            inventoryRepository.save(product.getInventory());
 
-            if(count >= product.getInventory().getQnt_min()){
-                System.out.println("salvado");
-            }
+            if(count >= product.getInventory().getQnt_min()) solicitation.setEnable(false);
+            else solicitation.setEnable(true);
+            solicitationRepository.save(solicitation);
 
         }
 

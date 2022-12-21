@@ -1,5 +1,6 @@
 package br.com.unifor.coffeecontrol.services;
 
+import br.com.unifor.coffeecontrol.dtos.EmployeeDetailDto;
 import br.com.unifor.coffeecontrol.dtos.EmployeeDto;
 import br.com.unifor.coffeecontrol.forms.EmployeeForm;
 import br.com.unifor.coffeecontrol.forms.UpdatedEmployeeForm;
@@ -11,9 +12,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.util.List;
+
 @Service
 public interface EmployeeService {
     Page<EmployeeDto> listEmployees(Pageable paginacao);
+
+    Page<EmployeeDetailDto> listEmployeeDetail(Pageable paginacao);
 
     ResponseEntity<EmployeeDto> signUpEmployee(EmployeeForm employeeForm, UriComponentsBuilder uriBuilder);
 
@@ -24,4 +29,6 @@ public interface EmployeeService {
     ResponseEntity<Employee> deleteSpecificEmployeeById(int id);
 
     ResponseEntity<EmployeeDto> toggleEnableById(int id, EmployeeRepository repository);
+
+    List<Object> genericFilter(EmployeeForm form);
 }

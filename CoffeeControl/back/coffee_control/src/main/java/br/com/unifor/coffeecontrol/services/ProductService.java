@@ -1,5 +1,6 @@
 package br.com.unifor.coffeecontrol.services;
 
+import br.com.unifor.coffeecontrol.dtos.ProductDetailDto;
 import br.com.unifor.coffeecontrol.dtos.ProductDto;
 import br.com.unifor.coffeecontrol.forms.ProductForm;
 import br.com.unifor.coffeecontrol.forms.UpdatedProductForm;
@@ -15,6 +16,8 @@ import java.util.List;
 @Service
 public interface ProductService{
     Page<ProductDto> listProducts(Pageable paginacao);
+
+    Page<ProductDetailDto> listProductDetail(Pageable paginacao);
 
     ResponseEntity<ProductDto> signUpProduct(ProductForm productForm, UriComponentsBuilder uriBuilder);
 

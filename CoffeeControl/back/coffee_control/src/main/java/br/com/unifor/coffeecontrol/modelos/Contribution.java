@@ -11,28 +11,18 @@ import java.util.List;
 
 @Entity(name = "contributions")
 @NoArgsConstructor
+@Getter @Setter
 public class Contribution {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Getter @Setter
     private int id;
-    @Getter @Setter
     @ManyToOne
     @JoinColumn(name = "id_solicitation")
     private Solicitation solicitation;
-    @Getter @Setter
     @ManyToOne
     @JoinColumn(name = "id_employee")
     private Employee employee;
-    @Getter @Setter
     private LocalDate date;
-//    @Getter @Setter
-//    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-//    @JoinTable(name="contributions_products", joinColumns=
-//            {@JoinColumn(name="id_contribution")}, inverseJoinColumns=
-//            {@JoinColumn(name="id_product")})
-//    private List<Product> products;
-    @Getter @Setter
     @OneToMany(mappedBy = "contribution")
     private List<ContributionsProducts> products;
 
