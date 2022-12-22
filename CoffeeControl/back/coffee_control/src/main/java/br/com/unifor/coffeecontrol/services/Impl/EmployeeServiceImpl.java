@@ -70,6 +70,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public List<Object> genericFilter(EmployeeForm form) {
-        return employeeRepository.genericFilter(form.getName(), form.getRegistration(), form.getEnable(), form.getProfile());
+        return employeeRepository.genericFilter(form.getName(), String.valueOf(form.getRegistration()), form.getEnable(), form.getProfile());
     }
 }

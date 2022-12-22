@@ -7,16 +7,12 @@ import br.com.unifor.coffeecontrol.repositories.ProductRepository;
 import lombok.Getter;
 import lombok.Setter;
 
+@Getter @Setter
 public class EmployeeForm {
-    @Getter @Setter
     private String name;
-    @Getter @Setter
     private int registration;
-    @Getter @Setter
     private String password;
-    @Getter @Setter
     private Boolean enable;
-    @Getter @Setter
     private Integer profile;
 
     public Employee convert(EmployeeRepository employeeRepository){

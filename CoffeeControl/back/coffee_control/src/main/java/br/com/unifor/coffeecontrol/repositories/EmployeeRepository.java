@@ -11,10 +11,10 @@ import java.util.List;
 public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
     Employee findByName(String name);
 
-    @Query(value = "select * from employees e \n" +
-            "\twhere (lower(e.name) like concat('%', :name, '%') or :name is null) \n" +
-            "\tand (lower(e.registration) like :registration or :registration is null)\n" +
-            "\tand (e.id_profile = :enable or :enable is null)\n" +
-            "\tand (e.enable = :profile or :profile is null)", nativeQuery = true)
-    List<Object> genericFilter(String name, Integer registration, Boolean enable, Integer profile);
+    @Query(value = "select * from employees e\n" +
+            "\twhere (lower(e.name) like lower(concat('%', :name, '%')) or :name is null) \n" +
+            "\tand (lower(e.registration) like :registration or cast(:registration as int) = 0) \n" +
+            "\tand (e.id_profile = :profile or :profile is null) \n" +
+            "\tand (e.enable = :enable or :enable is null)", nativeQuery = true)
+    List<Object> genericFilter(String name, String registration, Boolean enable, Integer profile);
 }
